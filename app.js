@@ -1,15 +1,16 @@
 const cells = document.querySelectorAll('.cell');
 const resultDisplay = document.getElementById('result');
 const playerModeButton = document.createElement('button');
+const button = document.getElementById('res');
 playerModeButton.textContent = 'Player vs Bot Mode';
 document.body.insertBefore(playerModeButton, document.getElementById('container'));
+
 
 let currentPlayer = 'X';
 let gameActive = true;
 let moves = 0;
 let playerVsBotMode = false;
 let botDifficulty = 'normal';
-
 const winningConditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -70,10 +71,7 @@ function makeBotMove() {
         botMoveIndex = makeSmartMove();
     } else if (botDifficulty === 'hard') {
         botMoveIndex = makeAdvancedSmartMove();
-    } else if (botDifficulty === 'gamer') {
-        botMoveIndex = makeGamerMove();
     }
-
     cells[botMoveIndex].textContent = currentPlayer;
     moves++;
     checkWinner();
@@ -100,7 +98,7 @@ function makeAdvancedSmartMove() {
 }
 
 function makeGamerMove() {
-    return checkForTwoInARow('O') || checkForTwoInARow('X') || makeSmartMove() || makeRandomMove();
+    return checkForTwoInARow('O') || checkForTwoInARow('X')
 }
 
 function checkForTwoInARow(player) {
@@ -122,6 +120,18 @@ cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 playerModeButton.addEventListener('click', () => {
     playerVsBotMode = true;
     playerModeButton.disabled = true;
-    botDifficulty = prompt('Choose bot difficulty (easy, normal, hard, gamer):');
+    botDifficulty = prompt('Choose bot difficulty (easy, normal, hard):');
     resetGame(); 
+    if (botDifficulty  == 'easy'|| botDifficulty  == 'normal' || botDifficulty  == 'hard') {
+        
+    } else {
+        alert("Please select easy , normal , hard");
+        playerVsBotMode = true;
+        playerModeButton.disabled = true;
+        botDifficulty = prompt('Choose bot difficulty (easy, normal, hard):');
+    }
 });
+button.addEventListener('click', res);
+function res(){
+    window.location.reload()
+}
